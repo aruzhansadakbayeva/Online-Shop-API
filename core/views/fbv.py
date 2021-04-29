@@ -47,10 +47,10 @@ def get_category(request, pk):
 @api_view(['GET', ])
 def get_category_products(request, pk):
     if request.method == 'GET':
-        category_books = []
+        category_products = []
         products = Product.objects.all()
         for product in products:
             if product.category.id == pk:
-                category_books.append(product)
-        serializer = ProductSerializer(category_books, many=True)
+                category_products.append(product)
+        serializer = ProductSerializer(category_products, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
