@@ -17,8 +17,8 @@ class ProductListAPIView(APIView):
         return [permission() for permission in permission_classes]
 
     def get(self, request):
-        books = Product.objects.all()
-        serializer = ProductSerializer(books, many=True)
+        products = Product.objects.all()
+        serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
     def post(self, request):
@@ -45,21 +45,21 @@ class ProductDetailAPIView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk):
-        book = self.get_object(pk)
-        serializer = ProductSerializer(book)
+        product = self.get_object(pk)
+        serializer = ProductSerializer(product)
         return Response(serializer.data)
 
     def put(self, request, pk):
-        book = self.get_object(pk)
-        serializer = ProductCreateSerializer(instance=book, data=request.data)
+        product = self.get_object(pk)
+        serializer = ProductCreateSerializer(instance=product, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response({'error': serializer.errors})
 
-    def delete(self, request, book_id):
-        book = self.get_object(book_id)
-        book.delete()
+    def delete(self, request, product_id):
+        product = self.get_object(product_id)
+        product.delete()
         return Response({'deleted': True})
 
 
